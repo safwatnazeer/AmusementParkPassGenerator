@@ -18,9 +18,6 @@ enum RequiredInfo {
     case City
     case State
     case ZipCode
-    
-    
-    
 }
 
 
@@ -88,7 +85,6 @@ enum EntrantType {
 
 
 struct Info {
-    
     var birthDate: NSDate?
     var firstName: String?
     var lastName: String?
@@ -100,71 +96,178 @@ struct Info {
 
 
 
-class Pass {
-    
+struct Pass {
     var entrantType: EntrantType
     var passAccess: PassAccess
     var addionalInfo: Info
     
-    
-    init(entrantType: EntrantType, passAccess: PassAccess,addionalInfo:Info ) {
-        self.entrantType = entrantType
-        self.passAccess = passAccess
-        self.addionalInfo = addionalInfo
-    }
-    
 }
 
 
-class PassGenerator  {
+final class PassGenerator  {
     
     func showRequiredInfo(entrantType: EntrantType) -> [RequiredInfo]{
         // show required info list
-        print (entrantType.requiredInfo)
+        for r in entrantType.requiredInfo { print("Required Info: \(r)") }
         return entrantType.requiredInfo
     }
     
-    func validateRequiredInfo (entrantType: EntrantType, info:Info) -> Error {
+    func validateRequiredInfo (entrantType: EntrantType, info:Info) -> [Error] {
         
         let requiredInfo = entrantType.requiredInfo
+        var errors = [Error]()
         
-        if requiredInfo.contains(.BirthDate) && info.birthDate == nil {return Error.BirthDateMissing}
-        if requiredInfo.contains(.FirstName) && info.firstName == nil {return Error.FirstNameMissing}
-        if requiredInfo.contains(.LastName) && info.lastName == nil {return Error.LastNameMissing}
-        if requiredInfo.contains(.StreetAddress) && info.streetAddress == nil {return Error.StreetAddressMissing}
-        if requiredInfo.contains(.City) && info.city == nil {return Error.CityMissing}
-        if requiredInfo.contains(.State) && info.state == nil {return Error.StateMissing}
-        if requiredInfo.contains(.ZipCode) && info.zipCode == nil {return Error.ZipCodeMissing}
+        if requiredInfo.contains(.BirthDate) && info.birthDate == nil { errors.append(.BirthDateMissing)}
+        if requiredInfo.contains(.FirstName) && info.firstName == nil {errors.append(.FirstNameMissing)}
+        if requiredInfo.contains(.LastName) && info.lastName == nil {errors.append(.LastNameMissing)}
+        if requiredInfo.contains(.StreetAddress) && info.streetAddress == nil {errors.append(.StreetAddressMissing)}
+        if requiredInfo.contains(.City) && info.city == nil {errors.append(.CityMissing)}
+        if requiredInfo.contains(.State) && info.state == nil {errors.append(.StateMissing)}
+        if requiredInfo.contains(.ZipCode) && info.zipCode == nil {errors.append(.ZipCodeMissing)}
         
+        // check birthdate for guest child
+        if (entrantType == .FreeChildGuest) {
+            if let birthDate = info.birthDate {
+                // check age <= 5 years else add error age above limit
+            }
+        }
         
-        return .NoError
+        // show errors
+        for e in errors { print("Error found: \(e)") }
+        return errors
     }
     
+    
+    
+    func createPass(entrantType: EntrantType, addionalInfo:Info) -> Pass? {
+        
+        let validateInfoResult = validateRequiredInfo(entrantType, info: addionalInfo)
+        guard validateInfoResult.count == 0  else {
+            return nil
+        }
+        
+        return Pass(entrantType: entrantType, passAccess: entrantType.passAccess, addionalInfo: addionalInfo)
+    }
+    
+}
+
+class AmuesmentParkEntranceKiosk {
+    
+    func plugData(){
+        
+        let e1 = EntrantType.FreeChildGuest
+        let g = PassGenerator()
+        g.showRequiredInfo(e1)
+        let i1 = Info(birthDate: nil, firstName: "Safwat", lastName: "Nazeer", streetAddress: "some street", city: "Cairo", state: "NY", zipCode: "1235GB")
+        let _ = g.validateRequiredInfo(e1, info: i1)
+        
+        
+        if let pass = g.createPass(e1, addionalInfo: i1)
+        {
+           
+            let kitchenGate = AreaAccessPoint(accessToCheck: AreaAccessType.KitchenAreas)
+            print( kitchenGate.swipe(pass) )
+            
+            let foodSwiperKFC = FoodDiscountSwiper()
+            print(foodSwiperKFC.swipe(pass))
+            
+           let merchandizeSwiperGAP = MerchandiseDiscountSwiper()
+            print(merchandizeSwiperGAP.swipe(pass))
+            
+        }
+        
+        let e2 = EntrantType.VIPGuest
+        let i2 = Info()
+        if let pass2 = g.createPass(e2, addionalInfo: i2) {
+            
+            let skipLineGateThunderTower = RideAccessPoint(accessToCheck: RideAbility.SkipAllRidesLines)
+           print ( skipLineGateThunderTower.swipe(pass2) )
+            
+            let foodSwiperMac = FoodDiscountSwiper()
+            print(foodSwiperMac.swipe(pass2) )
+        }
+        
+        
+     
+    }
     
 }
 
 
+protocol Swiper {
+    func swipe(pass: Pass) -> (Bool,String)
+}
+protocol AccessGate: Swiper {
+    var accessToCheck: AccessPrevilige {get}
+    
+}
 
+struct AreaAccessPoint: AccessGate {
 
+    var accessToCheck: AccessPrevilige
+    
+    func swipe(pass: Pass) -> (Bool, String) {
+        
+        if let accessToCheck = self.accessToCheck as? AreaAccessType {
+        
+            if pass.passAccess.areaAccessType.contains(accessToCheck) {
+                return (true, "Welcome")
+            }
+        }
+        
+        return (false,"Sorry, You cant admit here")
+    }
+}
 
+struct RideAccessPoint: AccessGate {
+    
+    var accessToCheck: AccessPrevilige
+    
+    func swipe(pass: Pass) -> (Bool, String) {
+        
+        if let accessToCheck = self.accessToCheck as? RideAbility {
+            
+            if pass.passAccess.rideAbility.contains(accessToCheck) {
+                return (true, "Welcome")
+            }
+        }
+        
+        return (false,"Sorry, You cant admit here")
+    }
+}
 
+struct FoodDiscountSwiper: Swiper {
+    
+    func swipe(pass: Pass) -> (Bool, String) {
+        
+        if pass.passAccess.discountFood != DiscountAccessFood.Discount0Food
+        {
+            let discountPercentage =  pass.passAccess.discountFood.rawValue
+                return (true, "Welcome, you have \(discountPercentage)% on Food.")
+            
+        } else {
+        return (false, "Sorry, you have no discount on Food.")
+        }
+    
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+struct MerchandiseDiscountSwiper: Swiper {
+        
+        func swipe(pass: Pass) -> (Bool, String) {
+            
+            if pass.passAccess.discountMerchandise != DiscountAccessMerchandise.Discount0Merchandise
+            {
+                let discountPercentage =  pass.passAccess.discountMerchandise.rawValue
+                return (true, "Welcome, you have \(discountPercentage)% on Merchandise.")
+                
+            } else {
+                return (false, "Sorry, you have no discount on Merchandise.")
+            }
+            
+        }
+        
+}
 
 
 

@@ -8,8 +8,11 @@
 
 import Foundation
 
+protocol AccessPrevilige {
+    
+}
 
-enum AreaAccessType {
+enum AreaAccessType: AccessPrevilige {
     
     case AmuesmentAreas
     case KitchenAreas
@@ -19,19 +22,19 @@ enum AreaAccessType {
     
 }
 
-enum RideAbility {
+enum RideAbility : AccessPrevilige {
     case AllRides
     case SkipAllRidesLines
 }
 
-enum DiscountAccessFood : Int {
+enum DiscountAccessFood : Int,AccessPrevilige {
     case Discount0Food = 0
     case Discount10Food = 10
     case Discount15Food = 15
     case Discount25Food = 25
 }
 
-enum DiscountAccessMerchandise : Int {
+enum DiscountAccessMerchandise : Int,AccessPrevilige {
     case Discount0Merchandise = 0
     case Discount20Merchandise = 20
     case Discount25Merchandise = 25
