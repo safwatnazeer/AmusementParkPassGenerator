@@ -22,7 +22,7 @@ enum AreaAccessType: AccessPrevilige {
     
 }
 
-enum RideAbility : AccessPrevilige {
+enum RideAccessType: AccessPrevilige {
     case AllRides
     case SkipAllRidesLines
 }
@@ -67,7 +67,7 @@ struct PersonalInformation {
 
 
 struct PassAccess {
-    var rideAbility: [RideAbility]
+    var rideAccessType: [RideAccessType]
     var areaAccessType: [AreaAccessType]
     var discountFood: DiscountAccessFood
     var discountMerchandise: DiscountAccessMerchandise

@@ -37,21 +37,21 @@ enum EntrantType {
     var passAccess: PassAccess {
         switch self{
             case .ClassicGuest:
-                 return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount0Food, discountMerchandise: .Discount0Merchandise)
+                 return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount0Food, discountMerchandise: .Discount0Merchandise)
             case .VIPGuest :
-                return PassAccess(rideAbility: [.SkipAllRidesLines,.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount10Food, discountMerchandise: .Discount20Merchandise)
+                return PassAccess(rideAccessType: [.SkipAllRidesLines,.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount10Food, discountMerchandise: .Discount20Merchandise)
             case .FreeChildGuest:
-                return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount0Food, discountMerchandise: .Discount0Merchandise)
+                return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas], discountFood: .Discount0Food, discountMerchandise: .Discount0Merchandise)
         
             
         case .HourlyEmployeeFoodServices:
-            return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
+            return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
         case .HourlyEmployeeRideServices:
-            return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas,.RideControlAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
+            return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.RideControlAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
         case .HourlyEmployeeMaintenance:
-            return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas,.MaintenanceAreas,.RideControlAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
+            return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.MaintenanceAreas,.RideControlAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
         case .Manager:
-            return PassAccess(rideAbility: [.AllRides], areaAccessType: [.AmuesmentAreas,.MaintenanceAreas,.RideControlAreas,.KitchenAreas,.OfficeAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
+            return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.MaintenanceAreas,.RideControlAreas,.KitchenAreas,.OfficeAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
 
             }
         }
@@ -180,7 +180,7 @@ class AmuesmentParkEntranceKiosk {
         let i2 = Info()
         if let pass2 = g.createPass(e2, addionalInfo: i2) {
             
-            let skipLineGateThunderTower = RideAccessPoint(accessToCheck: RideAbility.SkipAllRidesLines)
+            let skipLineGateThunderTower = RideAccessPoint(accessToCheck: RideAccessType.SkipAllRidesLines)
            print ( skipLineGateThunderTower.swipe(pass2) )
             
             let foodSwiperMac = FoodDiscountSwiper()
@@ -195,8 +195,16 @@ class AmuesmentParkEntranceKiosk {
 
 
 protocol Swiper {
+    func greetForBirthday(pass: Pass) -> String
     func swipe(pass: Pass) -> (Bool,String)
 }
+extension Swiper {
+    // MARK: default impl for birthday greeting
+    func greetForBirthday(pass: Pass) -> String {
+        return " and Happy Birthday 😃"
+    }
+}
+
 protocol AccessGate: Swiper {
     var accessToCheck: AccessPrevilige {get}
     
@@ -211,7 +219,8 @@ struct AreaAccessPoint: AccessGate {
         if let accessToCheck = self.accessToCheck as? AreaAccessType {
         
             if pass.passAccess.areaAccessType.contains(accessToCheck) {
-                return (true, "Welcome")
+                let bdGreeting = greetForBirthday(pass)
+                return (true, "Welcome\(bdGreeting)")
             }
         }
         
@@ -225,10 +234,11 @@ struct RideAccessPoint: AccessGate {
     
     func swipe(pass: Pass) -> (Bool, String) {
         
-        if let accessToCheck = self.accessToCheck as? RideAbility {
+        if let accessToCheck = self.accessToCheck as? RideAccessType {
             
-            if pass.passAccess.rideAbility.contains(accessToCheck) {
-                return (true, "Welcome")
+            if pass.passAccess.rideAccessType.contains(accessToCheck) {
+                let bdGreeting = greetForBirthday(pass)
+                return (true, "Welcome\(bdGreeting)")
             }
         }
         
@@ -243,7 +253,8 @@ struct FoodDiscountSwiper: Swiper {
         if pass.passAccess.discountFood != DiscountAccessFood.Discount0Food
         {
             let discountPercentage =  pass.passAccess.discountFood.rawValue
-                return (true, "Welcome, you have \(discountPercentage)% on Food.")
+            let bdGreeting = greetForBirthday(pass)
+            return (true, "Welcome\(bdGreeting), you have \(discountPercentage)% on Food.")
             
         } else {
         return (false, "Sorry, you have no discount on Food.")
@@ -259,7 +270,8 @@ struct MerchandiseDiscountSwiper: Swiper {
             if pass.passAccess.discountMerchandise != DiscountAccessMerchandise.Discount0Merchandise
             {
                 let discountPercentage =  pass.passAccess.discountMerchandise.rawValue
-                return (true, "Welcome, you have \(discountPercentage)% on Merchandise.")
+                let bdGreeting = greetForBirthday(pass)
+                return (true, "Welcome\(bdGreeting), you have \(discountPercentage)% on Merchandise.")
                 
             } else {
                 return (false, "Sorry, you have no discount on Merchandise.")
