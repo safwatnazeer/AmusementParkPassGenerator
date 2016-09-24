@@ -16,6 +16,8 @@
 		30D4FC131D9531EA008E9BE6 /* BasicElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC121D9531EA008E9BE6 /* BasicElements.swift */; };
 		30D4FC171D966ED1008E9BE6 /* ParkSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC161D966ED1008E9BE6 /* ParkSystem.swift */; };
 		30D4FC191D967044008E9BE6 /* Swiper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC181D967044008E9BE6 /* Swiper.swift */; };
+		30D4FC1C1D9722F9008E9BE6 /* ding.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30D4FC1B1D9722F9008E9BE6 /* ding.wav */; };
+		30D4FC1E1D97230E008E9BE6 /* buzz.wav in Resources */ = {isa = PBXBuildFile; fileRef = 30D4FC1D1D97230E008E9BE6 /* buzz.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		30D4FC121D9531EA008E9BE6 /* BasicElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicElements.swift; sourceTree = "<group>"; };
 		30D4FC161D966ED1008E9BE6 /* ParkSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkSystem.swift; sourceTree = "<group>"; };
 		30D4FC181D967044008E9BE6 /* Swiper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swiper.swift; sourceTree = "<group>"; };
+		30D4FC1B1D9722F9008E9BE6 /* ding.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ding.wav; sourceTree = "<group>"; };
+		30D4FC1D1D97230E008E9BE6 /* buzz.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = buzz.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				30D4FC031D9342DA008E9BE6 /* Assets.xcassets */,
 				30D4FC051D9342DA008E9BE6 /* LaunchScreen.storyboard */,
 				30D4FC081D9342DA008E9BE6 /* Info.plist */,
+				30D4FC1B1D9722F9008E9BE6 /* ding.wav */,
+				30D4FC1D1D97230E008E9BE6 /* buzz.wav */,
 			);
 			path = AmuesmentParkPassGenerator;
 			sourceTree = "<group>";
@@ -143,6 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				30D4FC071D9342DA008E9BE6 /* LaunchScreen.storyboard in Resources */,
+				30D4FC1E1D97230E008E9BE6 /* buzz.wav in Resources */,
+				30D4FC1C1D9722F9008E9BE6 /* ding.wav in Resources */,
 				30D4FC041D9342DA008E9BE6 /* Assets.xcassets in Resources */,
 				30D4FC021D9342DA008E9BE6 /* Main.storyboard in Resources */,
 			);

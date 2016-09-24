@@ -8,10 +8,12 @@
 
 import Foundation
 
+// common protocol for all types of access or discounts
 protocol AccessPrevilige {
     
 }
 
+// enum for all areas to be accessed
 enum AreaAccessType: AccessPrevilige {
     
     case AmuesmentAreas
@@ -22,11 +24,13 @@ enum AreaAccessType: AccessPrevilige {
     
 }
 
+// enum for rides access gates types
 enum RideAccessType: AccessPrevilige {
     case AllRides
     case SkipAllRidesLines
 }
 
+// enum for possible food dicounts
 enum DiscountAccessFood : Int,AccessPrevilige {
     case Discount0Food = 0
     case Discount10Food = 10
@@ -34,12 +38,15 @@ enum DiscountAccessFood : Int,AccessPrevilige {
     case Discount25Food = 25
 }
 
+// enum for possible merchandise discounts
 enum DiscountAccessMerchandise : Int,AccessPrevilige {
     case Discount0Merchandise = 0
     case Discount20Merchandise = 20
     case Discount25Merchandise = 25
 }
 
+
+// All Error types for missing info or other possibl errors
 enum Error {
     case NoError
     case FreeChildGuestAgeAboveLimit
@@ -54,18 +61,8 @@ enum Error {
     case ZipCodeMissing
 }
 
-struct PersonalInformation {
-    
-    let firstName: String
-    let lastName: String
-    let streetAddress: String
-    let city: String
-    let state:String
-    let zipCode: String
-    
-}
 
-
+// struct to define what access previliges a pass holds
 struct PassAccess {
     var rideAccessType: [RideAccessType]
     var areaAccessType: [AreaAccessType]
@@ -73,6 +70,7 @@ struct PassAccess {
     var discountMerchandise: DiscountAccessMerchandise
 }
 
+// enum to list types of required personal information
 enum RequiredInfo
 {
     case BirthDate
@@ -84,6 +82,7 @@ enum RequiredInfo
     case ZipCode
 }
 
+// struct to hold actual personal information of an entrant
 struct Info {
     var birthDate: NSDate?
     var firstName: String?
@@ -95,7 +94,7 @@ struct Info {
 }
 
 
-
+// struct to represent a entrant pass with all information and access perviliges
 struct Pass {
     var entrantType: Entrant
     var passAccess: PassAccess

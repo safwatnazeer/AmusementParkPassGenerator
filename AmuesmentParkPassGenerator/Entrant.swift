@@ -8,16 +8,19 @@
 
 import Foundation
 
+// General protocol for all enrants types
 protocol Entrant {
     var passAccess: PassAccess {get}
     var requiredInfo : [RequiredInfo] {get}
 }
 
+// enum to define differnt types of guests
 enum Guest : Entrant {
         case ClassicGuest
         case VIPGuest
         case FreeChildGuest
     
+    // Business rules for allowed access and discount types
     var passAccess: PassAccess {
         switch self {
         case .ClassicGuest:
@@ -29,6 +32,7 @@ enum Guest : Entrant {
         }
     }
     
+    //Business rules for required information each guest type
     var requiredInfo: [RequiredInfo] {
         switch self {
         case .ClassicGuest:
@@ -48,11 +52,13 @@ enum Employee: Entrant {
     case HourlyEmployeeMaintenance
     case Manager
     
+    // Business rules for allowed access and discount based on employee type
     var passAccess: PassAccess {
         switch self {
             case .HourlyEmployeeFoodServices:
                 return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
             case .HourlyEmployeeRideServices:
+                        // project instructions gives ride service employees access to all rides as well
                         return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.RideControlAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
             case .HourlyEmployeeMaintenance:
                         return PassAccess(rideAccessType: [.AllRides], areaAccessType: [.AmuesmentAreas,.MaintenanceAreas,.RideControlAreas,.KitchenAreas], discountFood: .Discount15Food, discountMerchandise: .Discount25Merchandise)
@@ -61,6 +67,7 @@ enum Employee: Entrant {
         }
     }
     
+    //Business rules for required information each employee type
     var requiredInfo: [RequiredInfo] {
         switch self{
             case .HourlyEmployeeFoodServices,.HourlyEmployeeRideServices,.HourlyEmployeeMaintenance,.Manager:
