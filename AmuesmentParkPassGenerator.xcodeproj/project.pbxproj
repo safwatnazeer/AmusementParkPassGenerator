@@ -12,8 +12,10 @@
 		30D4FC021D9342DA008E9BE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30D4FC001D9342DA008E9BE6 /* Main.storyboard */; };
 		30D4FC041D9342DA008E9BE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30D4FC031D9342DA008E9BE6 /* Assets.xcassets */; };
 		30D4FC071D9342DA008E9BE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30D4FC051D9342DA008E9BE6 /* LaunchScreen.storyboard */; };
-		30D4FC0F1D9342F2008E9BE6 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC0E1D9342F2008E9BE6 /* Model.swift */; };
+		30D4FC0F1D9342F2008E9BE6 /* Entrant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC0E1D9342F2008E9BE6 /* Entrant.swift */; };
 		30D4FC131D9531EA008E9BE6 /* BasicElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC121D9531EA008E9BE6 /* BasicElements.swift */; };
+		30D4FC171D966ED1008E9BE6 /* ParkSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC161D966ED1008E9BE6 /* ParkSystem.swift */; };
+		30D4FC191D967044008E9BE6 /* Swiper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4FC181D967044008E9BE6 /* Swiper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,8 +26,10 @@
 		30D4FC031D9342DA008E9BE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		30D4FC061D9342DA008E9BE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		30D4FC081D9342DA008E9BE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		30D4FC0E1D9342F2008E9BE6 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		30D4FC0E1D9342F2008E9BE6 /* Entrant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entrant.swift; sourceTree = "<group>"; };
 		30D4FC121D9531EA008E9BE6 /* BasicElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicElements.swift; sourceTree = "<group>"; };
+		30D4FC161D966ED1008E9BE6 /* ParkSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParkSystem.swift; sourceTree = "<group>"; };
+		30D4FC181D967044008E9BE6 /* Swiper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swiper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +64,24 @@
 			children = (
 				30D4FBFC1D9342DA008E9BE6 /* AppDelegate.swift */,
 				30D4FBFE1D9342DA008E9BE6 /* ViewController.swift */,
-				30D4FC0E1D9342F2008E9BE6 /* Model.swift */,
-				30D4FC121D9531EA008E9BE6 /* BasicElements.swift */,
+				30D4FC1A1D967070008E9BE6 /* Model */,
 				30D4FC001D9342DA008E9BE6 /* Main.storyboard */,
 				30D4FC031D9342DA008E9BE6 /* Assets.xcassets */,
 				30D4FC051D9342DA008E9BE6 /* LaunchScreen.storyboard */,
 				30D4FC081D9342DA008E9BE6 /* Info.plist */,
 			);
 			path = AmuesmentParkPassGenerator;
+			sourceTree = "<group>";
+		};
+		30D4FC1A1D967070008E9BE6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				30D4FC121D9531EA008E9BE6 /* BasicElements.swift */,
+				30D4FC181D967044008E9BE6 /* Swiper.swift */,
+				30D4FC161D966ED1008E9BE6 /* ParkSystem.swift */,
+				30D4FC0E1D9342F2008E9BE6 /* Entrant.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +155,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30D4FC0F1D9342F2008E9BE6 /* Model.swift in Sources */,
+				30D4FC0F1D9342F2008E9BE6 /* Entrant.swift in Sources */,
 				30D4FBFF1D9342DA008E9BE6 /* ViewController.swift in Sources */,
+				30D4FC171D966ED1008E9BE6 /* ParkSystem.swift in Sources */,
+				30D4FC191D967044008E9BE6 /* Swiper.swift in Sources */,
 				30D4FC131D9531EA008E9BE6 /* BasicElements.swift in Sources */,
 				30D4FBFD1D9342DA008E9BE6 /* AppDelegate.swift in Sources */,
 			);

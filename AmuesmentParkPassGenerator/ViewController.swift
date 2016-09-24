@@ -20,8 +20,9 @@ class ViewController: UIViewController {
     
     func testData() {
         
-        let ap = AmuesmentParkEntranceKiosk()
-        ap.plugData()
+        let p = ParkSystem()
+        p.plugData()
+        
     }
 
     

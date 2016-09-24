@@ -72,3 +72,33 @@ struct PassAccess {
     var discountFood: DiscountAccessFood
     var discountMerchandise: DiscountAccessMerchandise
 }
+
+enum RequiredInfo
+{
+    case BirthDate
+    case FirstName
+    case LastName
+    case StreetAddress
+    case City
+    case State
+    case ZipCode
+}
+
+struct Info {
+    var birthDate: NSDate?
+    var firstName: String?
+    var lastName: String?
+    var streetAddress: String?
+    var city: String?
+    var state: String?
+    var zipCode: String?
+}
+
+
+
+struct Pass {
+    var entrantType: Entrant
+    var passAccess: PassAccess
+    var addionalInfo: Info
+    
+}
