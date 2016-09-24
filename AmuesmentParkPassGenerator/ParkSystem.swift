@@ -94,50 +94,66 @@ extension ParkControlSystem  {
             let date: NSDate = dateFormatter.dateFromString(dateString)!
             return date
         }
+        func testAccess (entrant: Entrant, info: Info)
+        {
+            // define turnstile gates, restricted doors and cash registers
+            // Rides gates
+            let thunderMountainRailRoadGate = RideAccessPoint(accessToCheck: RideAccessType.AllRides, locationName: "Thunder Mountain Rail Ride")
+            let fastTrackDumboFlyingElephantGate = RideAccessPoint(accessToCheck: RideAccessType.SkipAllRidesLines, locationName: "Dumbo Ride Fast Track Gate")
+            // Access doors
+            let adminOfficeDoor = AreaAccessPoint(accessToCheck: AreaAccessType.OfficeAreas, locationName: "Admin Offices")
+            let mainControlRoomDoor = AreaAccessPoint(accessToCheck: AreaAccessType.RideControlAreas, locationName: "Main Control Room")
+            let staffKitchenDoor = AreaAccessPoint(accessToCheck: AreaAccessType.KitchenAreas,locationName: "Staff Kitchen Entrance" )
+            // Cash registers
+            let kfcRegister = FoodDiscountSwiper(locationName: "Cash Register KFC")
+            let piratesStoreRegister = MerchandiseDiscountSwiper(locationName: "Cash Register Pirates Store")
+            
+
+            print ("Validating data .. entrant type: \(entrant)")
+            validateRequiredInfo(entrant, info: info)
+            
+            if let pass = createPass(entrant, addionalInfo: info)
+            {
+                print("pass is created .. for entrant type: \(entrant)")
+                print("Trying to access:\(thunderMountainRailRoadGate.locationName) <--> Message \(thunderMountainRailRoadGate.swipe(pass))")
+                print("Trying to access:\(mainControlRoomDoor.locationName) <--> Message \(mainControlRoomDoor.swipe(pass))")
+                print("Trying to access:\(kfcRegister.locationName) <--> Message \(kfcRegister.swipe(pass))")
+                print("Trying to access:\(fastTrackDumboFlyingElephantGate.locationName) <--> Message \(fastTrackDumboFlyingElephantGate.swipe(pass))")
+                print("Trying to access:\(piratesStoreRegister.locationName) <--> Message \(piratesStoreRegister.swipe(pass))")
+                print("Trying to access:\(adminOfficeDoor.locationName) <--> Message \(adminOfficeDoor.swipe(pass))")
+                print("Trying to access:\(staffKitchenDoor.locationName) <--> Message \(staffKitchenDoor.swipe(pass))")
+            }
+            else {
+                print("pass is not created")
+            }
+
+        }
         
-        // define turnstile gates, restricted doors and cash registers
-        // Rides gates
-        let thunderMountainRailRoadGate = RideAccessPoint(accessToCheck: RideAccessType.AllRides, locationName: "Thunder Mountain Rail Ride")
-        let fastTrackDumboFlyingElephantGate = RideAccessPoint(accessToCheck: RideAccessType.SkipAllRidesLines, locationName: "Dumbo Ride Fast Track Gate")
-        // Access doors
-        let adminOfficeDoor = AreaAccessPoint(accessToCheck: AreaAccessType.OfficeAreas, locationName: "Admin Offices")
-        let mainControlRoomDoor = AreaAccessPoint(accessToCheck: AreaAccessType.RideControlAreas, locationName: "Main Control Room")
-        let staffKitchenDoor = AreaAccessPoint(accessToCheck: AreaAccessType.KitchenAreas,locationName: "Staff Kitchen Entrance" )
-        // Cash registers
-        let kfcRegister = FoodDiscountSwiper(locationName: "Cash Register KFC")
-        let piratesStoreRegister = MerchandiseDiscountSwiper(locationName: "Cash Register Pirates Store")
         
         // Use Cases
         // Enterant type: Classic Guest
         let entrant1 = Guest.ClassicGuest
         let info1 = Info(birthDate: nil, firstName: "Safwat", lastName: "Shenouda", streetAddress: "some street", city: "Amsterdam", state: "NY", zipCode: "1235GB")
+        testAccess(entrant1, info: info1)
         
-        print ("validating data .. ")
-        validateRequiredInfo(entrant1, info: info1)
-        
-        if let pass = createPass(entrant1, addionalInfo: info1)
-        {
-            print("pass created ..")
-            print("Trying to access:\(thunderMountainRailRoadGate.locationName) <--> Message \(thunderMountainRailRoadGate.swipe(pass))")
-            print("Trying to access:\(mainControlRoomDoor.locationName) <--> Message \(mainControlRoomDoor.swipe(pass))")
-            print("Trying to access:\(kfcRegister.locationName) <--> Message \(kfcRegister.swipe(pass))")
-        }
         // Enterant type: VIP Guest
         let entrant2 = Guest.VIPGuest
         let birthDate = createDateFromString("09-24-2016")
         let info2 = Info(birthDate: birthDate, firstName: "Safwat", lastName: "Shenouda", streetAddress: "some street", city: "Amsterdam", state: "NY", zipCode: "1235GB")
+        testAccess(entrant2, info: info2)
         
-        print ("validating data .. ")
-        validateRequiredInfo(entrant2, info: info2)
+        // Enterant type: Free Child Guest
+        let entrant3 = Guest.FreeChildGuest
+        let birthDate3 = createDateFromString("09-24-2012")
+        let info3 = Info(birthDate: birthDate3, firstName: "Mark", lastName: nil, streetAddress: nil, city: nil, state: nil, zipCode: nil)
+        testAccess(entrant3, info: info3)
         
-        if let pass = createPass(entrant2, addionalInfo: info2)
-        {
-            print("pass created ..")
-            print("Trying to access:\(thunderMountainRailRoadGate.locationName) <--> Message \(thunderMountainRailRoadGate.swipe(pass))")
-            print("Trying to access:\(mainControlRoomDoor.locationName) <--> Message \(mainControlRoomDoor.swipe(pass))")
-            print("Trying to access:\(kfcRegister.locationName) <--> Message \(kfcRegister.swipe(pass))")
-            print("Trying to access:\(fastTrackDumboFlyingElephantGate.locationName) <--> Message \(fastTrackDumboFlyingElephantGate.swipe(pass))")
-        }
+        // Enterant type: Manager
+        let entrant4 = Employee.Manager
+        let birthDate4 = createDateFromString("09-24-2012")
+        let info4 = Info(birthDate: birthDate4, firstName: "Mark", lastName: "Safwat", streetAddress: "Some street", city: "Amsterdam", state: "NH", zipCode: "1234GB")
+        testAccess(entrant4, info: info4)
+        
 
         
         
